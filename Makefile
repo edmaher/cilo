@@ -4,7 +4,7 @@ MACHCODE=0x1e
 TEXTADDR=0x80008000
 LOADADDR=0x80028000
 ifndef CROSS_COMPILE
-CROSS_COMPILE=mips-elf-
+CROSS_COMPILE=mips-linux-gnu-
 endif
 CFLAGS=-mno-abicalls
 LDFLAGS=-Ttext ${TEXTADDR}
@@ -15,7 +15,7 @@ LDFLAGS=-Ttext ${TEXTADDR}
 # TEXTADDR=0x80008000
 # LOADADDR=0x80028000
 # ifndef CROSS_COMPILE
-# CROSS_COMPILE=mips-elf-
+# CROSS_COMPILE=mips-linux-gnu-
 # endif
 # CFLAGS=-mno-abicalls
 # LDFLAGS=-Ttext ${TEXTADDR}
@@ -36,7 +36,7 @@ LDFLAGS=-Ttext ${TEXTADDR}
 # TEXTADDR=0x80008000
 # LOADADDR=0x80028000
 # ifndef CROSS_COMPILE
-# CROSS_COMPILE=mips-elf-
+# CROSS_COMPILE=mips-linux-gnu-
 # endif
 # CFLAGS=-DDEBUG -mno-abicalls
 # LDFLAGS=-Ttext ${TEXTADDR}
