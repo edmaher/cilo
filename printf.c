@@ -302,7 +302,7 @@ int sprintf(char *buf, const char *fmt, ...)
 	return i;
 }
 
-inline int printf(const char *fmt, ...)
+int printf(const char *fmt, ...)
 {
 	char printf_buf[1024];
 	va_list args;

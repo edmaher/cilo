@@ -5,6 +5,7 @@ TEXTADDR=0x80008000
 LOADADDR=0x80028000
 ifndef CROSS_COMPILE
 CROSS_COMPILE=mips-linux-gnu-
+ARCH=-march=mips32
 endif
 CFLAGS=-mno-abicalls
 LDFLAGS=-Ttext ${TEXTADDR}
@@ -62,12 +63,12 @@ RAW=${OBJCOPY} --strip-unneeded --alt-machine-code ${MACHCODE}
 INCLUDE=-Iinclude/ -Imach/${TARGET} -Iinclude/mach/${TARGET}
 
 CFLAGS+=-fno-builtin -fomit-frame-pointer -fno-pic \
-	-Wall -DLOADADDR=${LOADADDR}
+	-fno-stack-protector -Wall ${ARCH} -DLOADADDR=${LOADADDR}
 
 ASFLAGS=-D__ASSEMBLY__-xassembler-with-cpp -traditional-cpp
 
-LDFLAGS+=--omagic -nostartfiles -nostdlib --discard-all --strip-all \
-	--entry _start
+LDFLAGS+=-Wl,--omagic -nostartfiles -nostdlib -Wl,--discard-all -Wl,--strip-all \
+	--entry _start ${ARCH}
 
 OBJECTS=string.o main.o ciloio.o printf.o elf_loader.o lzma_loader.o \
 	LzmaDecode.o
@@ -90,7 +91,7 @@ ${PROG}: sub ${OBJECTS}
 
 .S.o:
 	${CC} ${CFLAGS} $(INCLUDE) ${ASFLAGS} -c $<
-	
+
 sub:
 	@for i in $(MACHDIR); do \
 	echo "Making all in $$i..."; \

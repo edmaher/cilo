@@ -21,7 +21,7 @@
  * @param file_offset offset (in bytes) in the ELF file where the section is
  * @param length Length of the section (in bytes)
  */
-void load_elf32_section(struct file *fp, uint32_t address, 
+void load_elf32_section(struct file *fp, uint32_t address,
     uint32_t file_offset, uint32_t length)
 {
     uint8_t *elf_loc = (uint8_t *)address;
@@ -31,7 +31,7 @@ void load_elf32_section(struct file *fp, uint32_t address,
 #endif
 
     cilo_seek(fp, (uint32_t)file_offset, SEEK_SET);
-    cilo_read(elf_loc, (uint32_t)length, 1, fp); 
+    cilo_read(elf_loc, (uint32_t)length, 1, fp);
 
 }
 
@@ -47,7 +47,7 @@ void load_elf32_uninitialized_memory(uint32_t address, uint32_t length)
     uint8_t *p = (uint8_t *)address;
 
 #ifdef DEBUG
-    printf("Uninit data: %08x, len %08x\n", address, length); 
+    printf("Uninit data: %08x, len %08x\n", address, length);
 #endif
 
     for (i = 0; i < length; i++) {
@@ -61,7 +61,7 @@ void load_elf32_uninitialized_memory(uint32_t address, uint32_t length)
  * things into RAM and then kick off the boot process.
  * @param base The address of the ELF file in memory
  * @param loader_addr address of the loader binary in memory
- * @return  
+ * @return
  */
 void load_elf32_file(struct file *fp, char *cmd_line)
 {
@@ -80,7 +80,7 @@ void load_elf32_file(struct file *fp, char *cmd_line)
         return;
     }
     /* check machine class: */
-    if (!hdr.ident[ELF_INDEX_CLASS] == ELF_CLASS_32)
+    if (hdr.ident[ELF_INDEX_CLASS] != ELF_CLASS_32)
     {
         printf("Invalid ELF machine class found. Found: %2x.\n",
             hdr.ident[ELF_INDEX_CLASS]);
@@ -204,7 +204,7 @@ void load_elf64_file(struct file *fp, char *cmd_line)
         return;
     }
     /* check machine class: */
-    if (!hdr.e_ident[ELF_INDEX_CLASS] == ELF_CLASS_64)
+    if (hdr.e_ident[ELF_INDEX_CLASS] != ELF_CLASS_64)
     {
         printf("Invalid ELF machine class found. Found: %2x.\n",
             hdr.e_ident[ELF_INDEX_CLASS]);
