@@ -1,14 +1,14 @@
 # Configuration for the Cisco 3620/3640 Routers
-#TARGET=c3600
-#MACHCODE=0x1e
-#TEXTADDR=0x80008000
-#LOADADDR=0x80028000
+TARGET=c3600
+MACHCODE=0x1e
+TEXTADDR=0x80008000
+LOADADDR=0x80028000
 #ifndef CROSS_COMPILE
-#CROSS_COMPILE=mips-linux-gnu-
-#ARCH=-march=mips32
+CROSS_COMPILE=mips-linux-gnu-
+ARCH=-march=mips32
 #endif
-#CFLAGS=-mno-abicalls
-#LDFLAGS=-Ttext ${TEXTADDR}
+CFLAGS=-mno-abicalls
+LDFLAGS=-Ttext ${TEXTADDR} -Wl,--script=mips.ld
 
 # Configuration for the Cisco 3660 Routers
 # TARGET=c3600
@@ -23,15 +23,15 @@
 # LDFLAGS=-Ttext ${TEXTADDR}
 
 # Configuration for the Cisco 1700 Series Routers
-TARGET=c1700
-MACHCODE=0x33
-TEXTADDR=0x80008000
-LOADADDR=0x80028000
-#ifndef CROSS_COMPILE
-CROSS_COMPILE=powerpc-linux-gnu-
-ARCH=-mcpu=860 # based on 1721
-#endif
-LDFLAGS=-Ttext=${TEXTADDR}
+#TARGET=c1700
+#MACHCODE=0x33
+#TEXTADDR=0x80008000
+#LOADADDR=0x80028000
+##ifndef CROSS_COMPILE
+#CROSS_COMPILE=powerpc-linux-gnu-
+#ARCH=-mcpu=860 # based on 1721
+##endif
+#LDFLAGS=-Ttext=${TEXTADDR}
 
 # Configuration for the Cisco 7200 Series Routers
 # TARGET=c7200
