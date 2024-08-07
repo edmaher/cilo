@@ -17,6 +17,7 @@
 
 /**
  * Entry Point for CiscoLoad
+ *  This is called by the assembly code in mach/xxxx/start.S
  */
 void start_bootloader()
 {
@@ -34,12 +35,15 @@ void start_bootloader()
     c_putc('I');
 
     r = c_memsz();
+    printf("\nCiscoLoader (CILO) - Linux bootloader for Cisco Routers\n");
+    printf("Available RAM: %d kB\n", r/1024);
 
     /* check flash filesystem sanity */
     c_putc('L');
 
-    f = check_flash();
-    
+    //f = check_flash();
+    f = 0; //doesn't work yet
+
     if (!f) {
         printf("\nError: Unable to find any valid flash! Aborting load.\n");
         return;
@@ -59,7 +63,7 @@ enter_filename:
     c_gets(buf, 128);
 
     int baud = c_baud(); /* get console baud rate */
-    
+
     /* determine if a command line string has been appended to kernel name */
     if ((cmd_line_append = strchr(buf, ' ')) != NULL) {
         strcpy(cmd_line, (char *)(cmd_line_append + 1));
@@ -99,7 +103,7 @@ enter_filename:
         cilo_seek(&kernel_file, 0, SEEK_SET);
 
         /* check if this is a 32-bit or 64-bit kernel image. */
-        if (hdr.ident[ELF_INDEX_CLASS] == ELF_CLASS_32) { 
+        if (hdr.ident[ELF_INDEX_CLASS] == ELF_CLASS_32) {
             load_elf32_file(&kernel_file, cmd_line);
         } else {
             load_elf64_file(&kernel_file, cmd_line);
